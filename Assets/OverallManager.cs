@@ -20,6 +20,7 @@ public class OverallManager : MonoBehaviour
     public void pressButtonTest()
     {
         pressCnt++;
-        Debug.Log(pressCnt);
+        string printText = " hello world";
+        Debug.Log(pressCnt.ToString() + printText);
     }
 }
