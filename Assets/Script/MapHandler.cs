@@ -69,6 +69,10 @@ public class MapHandler : MonoBehaviour
     }
     void updateLocationVisiable()
     {
+        // todo: getDataFromBackend
+        // macList = getMac()
+        // target = getLocation();
+
         for (int i = 0; i < locationList.Count; i++)
         {
             if (!locationList[i]) continue;
