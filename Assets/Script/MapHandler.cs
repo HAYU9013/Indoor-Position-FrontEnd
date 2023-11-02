@@ -14,7 +14,10 @@ public class MapHandler : MonoBehaviour
 
 
     public List<GameObject> locationList = new List<GameObject>();
+
+    [SerializeField]
     public List<bool> haveLocationData = new List<bool>();
+
     public int maxLocationNumber = 0;
     
     
@@ -124,7 +127,7 @@ public class MapHandler : MonoBehaviour
                 // 实例化Prefab物体
                 GameObject newObject = Instantiate(locationPrefab, tmpPos, Quaternion.identity);
                 newObject.transform.SetParent(mapArea.transform);
-
+                newObject.transform.localScale *= 5 / gridAmount; // change scale according to the gridAmount
 
                 newObject.name = "location_" + maxLocationNumber.ToString(); // 可能會出 bug
                 
@@ -136,4 +139,47 @@ public class MapHandler : MonoBehaviour
             
         }
     }
+
+    public void SaveHaveData()
+    {
+        print("save data");
+        string saveData = "";
+        for(int i = 0; i < haveLocationData.Count; i++)
+        {
+            if (haveLocationData[i]) saveData += "1";
+            else saveData += "0";
+
+        }
+        print("Save Data: " + saveData);
+        PlayerPrefs.SetString("haveLocationData", saveData);
+        PlayerPrefs.Save();
+    }
+    public void LoadHaveData()
+    {
+        print("load data");
+        string saveData = PlayerPrefs.GetString("haveLocationData");
+        print("Load Data: " + saveData);
+        for (int i = 0; i < haveLocationData.Count; i++)
+        {
+            if (saveData[i] == '1') haveLocationData[i] = true;
+            else haveLocationData[i] = false;
+
+        }
+
+        
+    }
+
+    public void ResetHaveData()
+    {
+        print("reset data");
+        for (int i = 0; i < haveLocationData.Count; i++)
+        {
+            haveLocationData[i] = false;
+        }
+        SaveHaveData();
+        LoadHaveData();
+
+    }
+    
+
 }
