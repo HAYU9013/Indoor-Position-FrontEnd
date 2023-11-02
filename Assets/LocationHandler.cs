@@ -41,7 +41,7 @@ public class LocationHandler : MonoBehaviour
         // Debug.Log(gameObject.name + " been click");
         int num = int.Parse(gameObject.name.Split("_")[1]);
         mapHandler.haveLocationData[num] = true;
-        /*
+        
         MacData macData = new MacData();
         // Debug.Log("ret from exe: " + getMacHandler.ExecuteCommand());
         macData.macs = getMacHandler.ExecuteCommand();
@@ -49,7 +49,7 @@ public class LocationHandler : MonoBehaviour
 
         string json = "" + JsonUtility.ToJson(macData);
         Debug.Log(json);
-        */
+        
 
     }
 }

@@ -70,7 +70,7 @@ public class MapHandler : MonoBehaviour
 
         if(updateTimeDelta < 0)
         {
-            // target = getWifiMac();
+            target = getWifiMac();
             updateLocationVisiable();
             updateTimeDelta = updateTime;
         }
