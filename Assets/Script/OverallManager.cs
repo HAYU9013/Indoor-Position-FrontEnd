@@ -25,11 +25,13 @@ public class OverallManager : MonoBehaviour
 
     public void pressButtonTest()
     {
+        
         pressCnt++;
         string printText = " hello world";
         Debug.Log(pressCnt.ToString() + printText);
-        getWifiMac();
-        // mapHandler.isCreating = !mapHandler.isCreating;
+        // getWifiMac();
+        
+        mapHandler.isCreating = !mapHandler.isCreating;
 
 
 

@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class MapHandler : MonoBehaviour
 {
+
     public bool isCreating = true;
+
+
+    MapHandler mapHandler;
+    GetMacHandler getMacHandler;
+    [System.Serializable]
+    public class MacData
+    {
+        public int point;
+        public List<string> macs;
+    }
+
+ 
 
     public GameObject mapArea;
     public GameObject locationPrefab; // the location pin prefab
@@ -27,7 +40,8 @@ public class MapHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        mapHandler = GameObject.Find("MapArea").GetComponent<MapHandler>();
+        getMacHandler = GameObject.Find("GetMac").GetComponent<GetMacHandler>();
         mapArea = GameObject.Find("MapArea");
 
         updateTimeDelta = updateTime;
@@ -56,6 +70,7 @@ public class MapHandler : MonoBehaviour
 
         if(updateTimeDelta < 0)
         {
+            // target = getWifiMac();
             updateLocationVisiable();
             updateTimeDelta = updateTime;
         }
@@ -120,6 +135,25 @@ public class MapHandler : MonoBehaviour
         }
     }
 
+    int getWifiMac() // 之後要換寫到不同地方
+    {
+        // Debug.Log(gameObject.name + " been click");
+        int num = -1;
+        
+
+        MacData macData = new MacData();
+        macData.macs = getMacHandler.ExecuteCommand();
+        macData.point = num;
+
+        string json = JsonUtility.ToJson(macData);
+        Debug.Log(json);
+
+        // todo send api;
+
+        return 5;
+
+    }
+
     void initLocation()
     {
         float gridLength = (rightMost - leftMost) / gridAmount;
@@ -143,6 +177,10 @@ public class MapHandler : MonoBehaviour
             
         }
     }
+
+
+
+
 
     public void SaveHaveData()
     {
