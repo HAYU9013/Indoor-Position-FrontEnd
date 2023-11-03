@@ -11,7 +11,14 @@ public class OverallManager : MonoBehaviour
     MapHandler mapHandler;
 
     public int pressCnt = 0;
-    
+
+    [System.Serializable]
+    public class ResponseData
+    {
+        public string message;
+        public string position;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +46,36 @@ public class OverallManager : MonoBehaviour
     }
      IEnumerator Upload(string jsonData, string url)
     {
+        Debug.Log("Send: " + jsonData);
+        jsonData = "@" + jsonData + "@";
+        using (UnityWebRequest www = UnityWebRequest.Post(url, jsonData))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+                if (url.Contains("get"))
+                {
+                    string responseText = www.downloadHandler.text; // 获取后端返回的数据
+                    ResponseData responseData = JsonUtility.FromJson<ResponseData>(responseText);
+
+                    // 获取position的值
+                    string positionValue = responseData.position;
+                    Debug.Log("Position Value: " + positionValue);
+                    mapHandler.GetComponent<MapHandler>().setTarget(int.Parse(positionValue));
+                }
+                
+                
+            }
+        }
+        /*
+        Debug.Log(url);
+        Debug.Log("post: " + jsonData);
         using (UnityWebRequest www = UnityWebRequest.Post(url , jsonData))
         {
             yield return www.SendWebRequest();
@@ -54,6 +91,7 @@ public class OverallManager : MonoBehaviour
                 Debug.Log("Response: " + responseText);
             }
         }
+        */
         /*
         print("uploading...");
         print(url);

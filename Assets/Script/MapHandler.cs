@@ -27,7 +27,7 @@ public class MapHandler : MonoBehaviour
     public float leftMost = -2f, rightMost = 2f; // the map position
     public float downMost = -2f, upMost = 2f;
     public float gridAmount = 5f; // how many point to show 
-
+    public Vector3 standardScale;
     // the pin point list
     public List<GameObject> locationList = new List<GameObject>();
 
@@ -37,7 +37,7 @@ public class MapHandler : MonoBehaviour
 
     public int maxLocationNumber = 0;
 
-    private string url = "https://cee0-140-115-84-203.ngrok.io/get_position";
+    private string url = "https://d7a2-140-115-84-203.ngrok.io" + "/get_position";
 
 
     public int target = -1; // the location to show out
@@ -79,7 +79,7 @@ public class MapHandler : MonoBehaviour
 
         if(updateTimeDelta < 0)
         {
-            target = getWifiMac();
+            getWifiMac();
             updateLocationVisiable();
             updateTimeDelta = updateTime;
         }
@@ -116,6 +116,7 @@ public class MapHandler : MonoBehaviour
 
             if (isCreating) // 還沒有資料的設定黑色 有資料的設定彩色
             {
+                locationList[i].transform.localScale = standardScale;
                 if (haveLocationData[i])
                 {
                     locationList[i].GetComponent<SpriteRenderer>().color = IsHereColor;
@@ -128,12 +129,14 @@ public class MapHandler : MonoBehaviour
             }
             else // 正確點顯示白色 不是的顯示半透明
             {
+                locationList[i].transform.localScale = standardScale * 0.3f;
                 if (haveLocationData[i] == false)
                 {
                     locationList[i].GetComponent<SpriteRenderer>().color = NoColor;
                 }
                 else if (locationList[i].name == "location_" + target.ToString())
                 {
+                    locationList[i].transform.localScale = standardScale;
                     locationList[i].GetComponent<SpriteRenderer>().color = IsHereColor;
                     
                     
@@ -142,7 +145,7 @@ public class MapHandler : MonoBehaviour
                 {
                    
                     locationList[i].GetComponent<SpriteRenderer>().color = NotHereColor;
-                    locationList[i].GetComponent<SpriteRenderer>().color = BlackColor; // 正式要註解掉
+                    // locationList[i].GetComponent<SpriteRenderer>().color = BlackColor; // 正式要註解掉
                 }
             }
             
@@ -151,7 +154,7 @@ public class MapHandler : MonoBehaviour
     }
 
 
-    int getWifiMac() // 之後要換寫到不同地方
+    void getWifiMac() // 之後要換寫到不同地方
     {
         
         MacData macData = new MacData();
@@ -163,7 +166,7 @@ public class MapHandler : MonoBehaviour
         overallManager.postData(jsonData, url);
         // todo send api;
 
-        return 5;
+        
 
     }
 
@@ -182,6 +185,7 @@ public class MapHandler : MonoBehaviour
                 // 实例化Prefab物体
                 GameObject newObject = Instantiate(locationPrefab, tmpPos, Quaternion.identity);
                 newObject.transform.SetParent(mapArea.transform);
+                standardScale = newObject.transform.localScale * 5 / gridAmount;
                 newObject.transform.localScale *= 5 / gridAmount; // change scale according to the gridAmount
 
                 newObject.name = "location_" + maxLocationNumber.ToString(); // 可能會出 bug

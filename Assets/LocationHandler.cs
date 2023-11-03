@@ -24,12 +24,12 @@ public class LocationHandler : MonoBehaviour
     public MacListWarp macList;
 
     public int getWifiTime = 0;
-    private float getWifiDuration = 0.2f;
+    private float getWifiDuration = 2f;
     public float getWifiTick = 0;
     public bool getWifiDone = false;
 
     OverallManager overallManager;
-    private string url = "https://cee0-140-115-84-203.ngrok.io/data_update";
+    private string url = "https://d7a2-140-115-84-203.ngrok.io" + "/data_update";
     public int totalGetWifiTime = 10;
 
     // Start is called before the first frame update
