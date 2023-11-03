@@ -25,6 +25,6 @@ public class InputFieldHandler : MonoBehaviour
     private void SubmitName(string arg0)
     {
         // Debug.Log(arg0);
-        mapArea.GetComponent<MapHandler>().target = int.Parse(arg0); ;
+        mapArea.SendMessage("setTarget", int.Parse(arg0));
     }
 }

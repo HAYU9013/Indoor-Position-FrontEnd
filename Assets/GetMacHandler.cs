@@ -69,7 +69,7 @@ public class GetMacHandler : MonoBehaviour
     {
         List<string> retMacString = new List<string>();
         
-        print("ret size: " + retMacString.Count);
+        // print("ret size: " + retMacString.Count);
         for(int i = 0; i < receive.Count; i++)
         {
             // UnityEngine.Debug.Log(receive[i]);
@@ -83,10 +83,10 @@ public class GetMacHandler : MonoBehaviour
                 int len = macStrings.Length;
                 mac = macStrings[len - 6].Trim() + ":" + macStrings[len - 5] + ":" + macStrings[len - 4] + ":" + macStrings[len - 3] + ":" + macStrings[len - 2] + ":" + macStrings[len - 1];
                 
-                UnityEngine.Debug.Log(mac);
+                // UnityEngine.Debug.Log(mac);
                 string signal = receive[i + 1].Split(':')[1];
                 signal = "" + signal[1] + signal[2];
-                UnityEngine.Debug.Log(signal);
+                // UnityEngine.Debug.Log(signal);
                 retMacString.Add(mac);
                 retMacString.Add(signal);
             }

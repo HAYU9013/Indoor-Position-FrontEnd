@@ -1,50 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class MapHandler : MonoBehaviour
 {
 
-    public bool isCreating = true;
+    public bool isCreating = true; // creating mode or user mode
 
 
     MapHandler mapHandler;
     GetMacHandler getMacHandler;
+
+    // warp the data to send to api
     [System.Serializable]
     public class MacData
     {
-        public int point;
+        
         public List<string> macs;
     }
 
  
-
+    // draw the pin point on the map
     public GameObject mapArea;
     public GameObject locationPrefab; // the location pin prefab
     public float leftMost = -2f, rightMost = 2f; // the map position
     public float downMost = -2f, upMost = 2f;
     public float gridAmount = 5f; // how many point to show 
 
-
+    // the pin point list
     public List<GameObject> locationList = new List<GameObject>();
 
+    // whether the pin point list have been collect the data
     [SerializeField]
     public List<bool> haveLocationData = new List<bool>();
 
     public int maxLocationNumber = 0;
-    
-    
+
+    private string url = "https://cee0-140-115-84-203.ngrok.io/get_position";
+
+
     public int target = -1; // the location to show out
     public float updateTime = 0.5f; // how soon to get current position
     float updateTimeDelta ;
+
+    OverallManager overallManager;
     // Start is called before the first frame update
     void Start()
     {
+        overallManager = GameObject.Find("OverallManager").GetComponent<OverallManager>();
         mapHandler = GameObject.Find("MapArea").GetComponent<MapHandler>();
         getMacHandler = GameObject.Find("GetMac").GetComponent<GetMacHandler>();
         mapArea = GameObject.Find("MapArea");
 
-        updateTimeDelta = updateTime;
+        updateTimeDelta = 1f;
         gridAmount--; // original will add one more
         initLocation();
 
@@ -82,6 +91,12 @@ public class MapHandler : MonoBehaviour
         
         
     }
+
+    public void setTarget(int t)
+    {
+        target = t;
+    }
+
     void updateLocationVisiable()
     {
         // todo: getDataFromBackend
@@ -135,25 +150,27 @@ public class MapHandler : MonoBehaviour
         }
     }
 
+
     int getWifiMac() // 之後要換寫到不同地方
     {
-        // Debug.Log(gameObject.name + " been click");
-        int num = -1;
         
-
         MacData macData = new MacData();
         macData.macs = getMacHandler.ExecuteCommand();
-        macData.point = num;
+        
+        string jsonData = JsonUtility.ToJson(macData);
+        Debug.Log(jsonData);
 
-        string json = JsonUtility.ToJson(macData);
-        Debug.Log(json);
-
+        overallManager.postData(jsonData, url);
         // todo send api;
 
         return 5;
 
     }
 
+    
+
+
+    // create pin point on the location and draw it out;
     void initLocation()
     {
         float gridLength = (rightMost - leftMost) / gridAmount;
@@ -181,7 +198,7 @@ public class MapHandler : MonoBehaviour
 
 
 
-
+    // save load reset the haveLocationData list
     public void SaveHaveData()
     {
         print("save data");

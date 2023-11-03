@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Net.NetworkInformation;
 using System;
+using UnityEngine.Networking;
 
 
 public class OverallManager : MonoBehaviour
@@ -23,40 +24,65 @@ public class OverallManager : MonoBehaviour
         
     }
 
-    public void pressButtonTest()
+    public void pressButtonTest() // testing button
     {
         
         pressCnt++;
         string printText = " hello world";
         Debug.Log(pressCnt.ToString() + printText);
-        // getWifiMac();
-        
         mapHandler.isCreating = !mapHandler.isCreating;
-
-
-
-
     }
-    public void getWifiMac()
+
+    public void postData(string jsonData, string url)
     {
-        NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-
-        foreach (NetworkInterface networkInterface in networkInterfaces)
+        StartCoroutine(Upload(jsonData, url));   
+    }
+     IEnumerator Upload(string jsonData, string url)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Post(url , jsonData))
         {
-            Debug.Log("getting wifi");
-            if (networkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
             {
-                // 这是WiFi接口
-                PhysicalAddress macAddress = networkInterface.GetPhysicalAddress();
-                string macAddressString = BitConverter.ToString(macAddress.GetAddressBytes());
-                string interfaceName = networkInterface.Name;
-
-                // 输出MAC地址和接口名称
-                Debug.Log("MAC地址: " + macAddressString);
-                Debug.Log("接口名称: " + interfaceName);
-
-                // 你可以继续在这里添加位置信息的获取代码
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+                string responseText = www.downloadHandler.text; // 获取后端返回的数据
+                Debug.Log("Response: " + responseText);
             }
         }
+        /*
+        print("uploading...");
+        print(url);
+        print(jsonData);
+
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+
+        byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonData);
+
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+        else
+        {
+            string jsonResponse = request.downloadHandler.text;
+            Debug.LogWarning("Response: " + jsonResponse);
+
+            // 在这里你可以对响应数据进行进一步处理
+        }
+
+        */
     }
+
+
 }

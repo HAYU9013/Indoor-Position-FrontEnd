@@ -1280,7 +1280,7 @@ MonoBehaviour:
   haveLocationData: 
   maxLocationNumber: 0
   target: -1
-  updateTime: 3
+  updateTime: 1
 --- !u!4 &940985642
 Transform:
   m_ObjectHideFlags: 0
@@ -1393,9 +1393,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 671211977}
-        m_TargetAssemblyTypeName: OverallManager, Assembly-CSharp
-        m_MethodName: pressButtonTest
+      - m_Target: {fileID: 315430268}
+        m_TargetAssemblyTypeName: GetMacHandler, Assembly-CSharp
+        m_MethodName: PressButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
