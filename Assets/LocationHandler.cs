@@ -29,7 +29,7 @@ public class LocationHandler : MonoBehaviour
     public bool getWifiDone = false;
 
     OverallManager overallManager;
-    private string url = "https://d7a2-140-115-84-203.ngrok.io" + "/data_update";
+    private string url = "https://d251-140-115-137-139.ngrok.io" + "/data_update";
     public int totalGetWifiTime = 10;
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class LocationHandler : MonoBehaviour
         getWifiTick -= Time.deltaTime;
         if (getWifiTime > 0 && getWifiTick < 0)
         {
-            getWifiMac();
+            // getWifiMac();
             getWifiTime--;
             getWifiTick = getWifiDuration;
             print("still have " + getWifiTime);
@@ -72,13 +72,16 @@ public class LocationHandler : MonoBehaviour
 
     private void OnMouseDown()
     { 
+        
         macList.MacList.Clear();
         print("Mouse down");
         getWifiTime = totalGetWifiTime + 1; // 取得 10 次
+        int num = int.Parse(gameObject.name.Split("_")[1]);
+        mapHandler.haveLocationData[num] = true;
+
+        overallManager.FloatWindows();
 
 
- 
-        
     }
 
     void getWifiMac() // 之後要換寫到不同地方

@@ -7,16 +7,6 @@ public class GetMacHandler : MonoBehaviour
 {
     public string command = "netsh wlan show networks mode=Bssid";
     public List<string> receive = new List<string>();
-    /*
-    [System.Serializable]
-    public class MacData
-    {
-        public string mac;
-        public int signal;
-    }
-
-    public List<MacData> MacList = new List<MacData>();
-    */
 
     
 

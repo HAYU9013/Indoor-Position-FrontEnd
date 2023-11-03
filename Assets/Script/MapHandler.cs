@@ -37,10 +37,10 @@ public class MapHandler : MonoBehaviour
 
     public int maxLocationNumber = 0;
 
-    private string url = "https://d7a2-140-115-84-203.ngrok.io" + "/get_position";
+    private string url = "https://d251-140-115-137-139.ngrok.io" + "/get_position";
 
 
-    public int target = -1; // the location to show out
+    public int target = 9; // the location to show out
     public float updateTime = 0.5f; // how soon to get current position
     float updateTimeDelta ;
 
@@ -53,7 +53,7 @@ public class MapHandler : MonoBehaviour
         getMacHandler = GameObject.Find("GetMac").GetComponent<GetMacHandler>();
         mapArea = GameObject.Find("MapArea");
 
-        updateTimeDelta = 1f;
+        updateTimeDelta = updateTime;
         gridAmount--; // original will add one more
         initLocation();
 
@@ -79,7 +79,7 @@ public class MapHandler : MonoBehaviour
 
         if(updateTimeDelta < 0)
         {
-            getWifiMac();
+            // getWifiMac();
             updateLocationVisiable();
             updateTimeDelta = updateTime;
         }
@@ -181,7 +181,7 @@ public class MapHandler : MonoBehaviour
         {
             for(float j = downMost; j <= upMost; j += gridLength)
             {
-                Vector3 tmpPos = new Vector3(i, j, 0);
+                Vector3 tmpPos = new Vector3(i, j+1.4f, 0);
                 // 实例化Prefab物体
                 GameObject newObject = Instantiate(locationPrefab, tmpPos, Quaternion.identity);
                 newObject.transform.SetParent(mapArea.transform);

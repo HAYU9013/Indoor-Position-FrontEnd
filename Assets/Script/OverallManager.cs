@@ -4,14 +4,16 @@ using UnityEngine;
 using System.Net.NetworkInformation;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.Android;
+using UnityEngine.UI;
 
 
 public class OverallManager : MonoBehaviour
 {
     MapHandler mapHandler;
-
+    
     public int pressCnt = 0;
-
+    public Text isCreating;
     [System.Serializable]
     public class ResponseData
     {
@@ -19,16 +21,47 @@ public class OverallManager : MonoBehaviour
         public string position;
     }
 
+    public GameObject buttonA, buttonB;
+    public GameObject windowsE, windowsU;
+    public Text timer;
+    public float CountDown = 0f;
     // Start is called before the first frame update
     void Start()
     {
         mapHandler = GameObject.Find("MapArea").GetComponent<MapHandler>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (CountDown >= 0)
+        {
+            CountDown -= Time.deltaTime;
+        }
+        if (windowsE.active)
+        {
+            timer.text = "" + (int)(CountDown + 1) + " s";
+        }
         
+    }
+    public void FloatWindows()
+    {
+        if (mapHandler.isCreating)
+        {
+            windowsE.SetActive(true);
+            CountDown = 20f;
+        }
+        else
+        {
+            windowsU.SetActive(true);
+        }
+        
+    }
+    public void closeFloatWindows()
+    {
+        windowsE.SetActive(false);
+        windowsU.SetActive(false);
     }
 
     public void pressButtonTest() // testing button
@@ -37,12 +70,31 @@ public class OverallManager : MonoBehaviour
         pressCnt++;
         string printText = " hello world";
         Debug.Log(pressCnt.ToString() + printText);
+        
         mapHandler.isCreating = !mapHandler.isCreating;
+
+        if (mapHandler.isCreating)
+        {
+            isCreating.text = "EDIT";
+            buttonA.SetActive(true);
+            buttonB.SetActive(true);
+        }
+        else
+        {
+            isCreating.text = "locate";
+            buttonA.SetActive(false);
+            buttonB.SetActive(false);
+        }
+        /*
+        AndroidJavaClass wifiManagerClass = new AndroidJavaClass();
+        AndroidJavaObject wifiManager = wifiManagerClass.CallStatic<AndroidJavaObject>("getSystemService", "WIFI_SERVICE");
+        */
+
     }
 
     public void postData(string jsonData, string url)
     {
-        StartCoroutine(Upload(jsonData, url));   
+        // StartCoroutine(Upload(jsonData, url));   
     }
      IEnumerator Upload(string jsonData, string url)
     {
