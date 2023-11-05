@@ -37,7 +37,7 @@ public class MapHandler : MonoBehaviour
 
     public int maxLocationNumber = 0;
 
-    private string url = "https://d251-140-115-137-139.ngrok.io" + "/get_position";
+    private string url = "https://a358-125-227-30-92.ngrok.io" + "/get_position";
 
 
     public int target = 9; // the location to show out
@@ -79,7 +79,7 @@ public class MapHandler : MonoBehaviour
 
         if(updateTimeDelta < 0)
         {
-            // getWifiMac();
+            getWifiMac();
             updateLocationVisiable();
             updateTimeDelta = updateTime;
         }
@@ -88,8 +88,12 @@ public class MapHandler : MonoBehaviour
             updateTimeDelta -= Time.deltaTime;
         }
 
-        
-        
+        /*******************
+        target  = 22
+        ******************/
+        // target = 22;
+
+
     }
 
     public void setTarget(int t)

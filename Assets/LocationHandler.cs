@@ -29,7 +29,7 @@ public class LocationHandler : MonoBehaviour
     public bool getWifiDone = false;
 
     OverallManager overallManager;
-    private string url = "https://d251-140-115-137-139.ngrok.io" + "/data_update";
+    private string url = "https://a358-125-227-30-92.ngrok.io" + "/data_update";
     public int totalGetWifiTime = 10;
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class LocationHandler : MonoBehaviour
         getWifiTick -= Time.deltaTime;
         if (getWifiTime > 0 && getWifiTick < 0)
         {
-            // getWifiMac();
+            getWifiMac();
             getWifiTime--;
             getWifiTick = getWifiDuration;
             print("still have " + getWifiTime);
@@ -98,7 +98,7 @@ public class LocationHandler : MonoBehaviour
         string jsonData = "" + JsonUtility.ToJson(macData);
         Debug.Log(jsonData);
 
-        overallManager.postData(jsonData, url);
+        // overallManager.postData(jsonData, url);
 
     }
     

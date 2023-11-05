@@ -94,7 +94,7 @@ public class OverallManager : MonoBehaviour
 
     public void postData(string jsonData, string url)
     {
-        // StartCoroutine(Upload(jsonData, url));   
+        StartCoroutine(Upload(jsonData, url));   
     }
      IEnumerator Upload(string jsonData, string url)
     {
