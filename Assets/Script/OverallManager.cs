@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class OverallManager : MonoBehaviour
 {
     MapHandler mapHandler;
-    
+    public string baseUrl;
     public int pressCnt = 0;
     public Text isCreating;
     [System.Serializable]
@@ -28,6 +28,7 @@ public class OverallManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        baseUrl = "https://a358-125-227-30-92.ngrok.io";
         mapHandler = GameObject.Find("MapArea").GetComponent<MapHandler>();
         
     }

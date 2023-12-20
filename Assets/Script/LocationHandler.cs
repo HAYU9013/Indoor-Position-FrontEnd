@@ -43,6 +43,12 @@ public class LocationHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(overallManager.baseUrl.Length > 5 && overallManager.baseUrl + "/data_update" != url)
+        {
+            url = overallManager.baseUrl + "/data_update";
+            Debug.LogWarning("change update url " + url);
+        }
+        
         getWifiTick -= Time.deltaTime;
         if (getWifiTime > 0 && getWifiTick < 0)
         {

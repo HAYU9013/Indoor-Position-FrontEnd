@@ -75,9 +75,13 @@ public class MapHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (overallManager.baseUrl.Length > 5 && overallManager.baseUrl + "/get_position" != url)
+        {
+            url = overallManager.baseUrl + "/get_position";
+            Debug.LogWarning("change getPos url " + url);
+        }
 
-
-        if(updateTimeDelta < 0)
+        if (updateTimeDelta < 0)
         {
             getWifiMac();
             updateLocationVisiable();
