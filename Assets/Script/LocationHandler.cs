@@ -104,7 +104,7 @@ public class LocationHandler : MonoBehaviour
         string jsonData = "" + JsonUtility.ToJson(macData);
         Debug.Log(jsonData);
 
-        // overallManager.postData(jsonData, url);
+        overallManager.postData(jsonData, url);
 
     }
     
