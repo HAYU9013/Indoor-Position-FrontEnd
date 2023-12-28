@@ -99,7 +99,7 @@ public class OverallManager : MonoBehaviour
     }
      IEnumerator Upload(string jsonData, string url)
     {
-        Debug.Log("Send: " + jsonData);
+        // Debug.Log("Send: " + jsonData);
         jsonData = "@" + jsonData + "@";
         using (UnityWebRequest www = UnityWebRequest.Post(url, jsonData))
         {
@@ -111,7 +111,7 @@ public class OverallManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Form upload complete!");
+                // Debug.Log("Form upload complete!");
                 if (url.Contains("get"))
                 {
                     string responseText = www.downloadHandler.text; // 获取后端返回的数据
