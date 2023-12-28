@@ -85,7 +85,7 @@ public class LocationHandler : MonoBehaviour
         int num = int.Parse(gameObject.name.Split("_")[1]);
         mapHandler.haveLocationData[num] = true;
 
-        overallManager.FloatWindows();
+        // overallManager.FloatWindows();
 
 
     }
