@@ -22,7 +22,7 @@ public class OverallManager : MonoBehaviour
     }
 
     public GameObject buttonA, buttonB;
-    public GameObject windowsE, windowsU;
+    
     public Text timer;
     public float CountDown = 0f;
     // Start is called before the first frame update
@@ -40,37 +40,18 @@ public class OverallManager : MonoBehaviour
         {
             CountDown -= Time.deltaTime;
         }
-        if (windowsE.active)
-        {
-            timer.text = "" + (int)(CountDown + 1) + " s";
-        }
+        
         
     }
-    public void FloatWindows()
-    {
-        if (mapHandler.isCreating)
-        {
-            windowsE.SetActive(true);
-            CountDown = 20f;
-        }
-        else
-        {
-            windowsU.SetActive(true);
-        }
-        
-    }
-    public void closeFloatWindows()
-    {
-        windowsE.SetActive(false);
-        windowsU.SetActive(false);
-    }
+    
+
 
     public void pressButtonTest() // testing button
     {
         
         pressCnt++;
         string printText = " hello world";
-        Debug.Log(pressCnt.ToString() + printText);
+        // Debug.Log(pressCnt.ToString() + printText);
         
         mapHandler.isCreating = !mapHandler.isCreating;
 
@@ -86,10 +67,7 @@ public class OverallManager : MonoBehaviour
             buttonA.SetActive(false);
             buttonB.SetActive(false);
         }
-        /*
-        AndroidJavaClass wifiManagerClass = new AndroidJavaClass();
-        AndroidJavaObject wifiManager = wifiManagerClass.CallStatic<AndroidJavaObject>("getSystemService", "WIFI_SERVICE");
-        */
+      
 
     }
 
@@ -126,53 +104,6 @@ public class OverallManager : MonoBehaviour
                 
             }
         }
-        /*
-        Debug.Log(url);
-        Debug.Log("post: " + jsonData);
-        using (UnityWebRequest www = UnityWebRequest.Post(url , jsonData))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Form upload complete!");
-                string responseText = www.downloadHandler.text; // 获取后端返回的数据
-                Debug.Log("Response: " + responseText);
-            }
-        }
-        */
-        /*
-        print("uploading...");
-        print(url);
-        print(jsonData);
-
-        UnityWebRequest request = new UnityWebRequest(url, "POST");
-
-        byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonData);
-
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.isNetworkError || request.isHttpError)
-        {
-            Debug.LogError("Error: " + request.error);
-        }
-        else
-        {
-            string jsonResponse = request.downloadHandler.text;
-            Debug.LogWarning("Response: " + jsonResponse);
-
-            // 在这里你可以对响应数据进行进一步处理
-        }
-
-        */
     }
 
 

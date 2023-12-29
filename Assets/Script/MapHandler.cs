@@ -57,19 +57,6 @@ public class MapHandler : MonoBehaviour
         gridAmount--; // original will add one more
         initLocation();
 
-        /* find the location when the map have already build
-         * for (int i = 0; i < 100; i++)
-        {
-            // GameObject temp = GameObject.Find("location" + i.ToString());
-            
-            if (temp)
-            {
-                locationList.Add(temp);
-                maxLocationNumber++;
-            }
-        }
-
-        */
     }
 
     // Update is called once per frame
@@ -92,12 +79,6 @@ public class MapHandler : MonoBehaviour
             updateTimeDelta -= Time.deltaTime;
         }
 
-        /*******************
-        target  = 22
-        ******************/
-        // target = 22;
-
-
     }
 
     public void setTarget(int t)
@@ -107,9 +88,6 @@ public class MapHandler : MonoBehaviour
 
     void updateLocationVisiable()
     {
-        // todo: getDataFromBackend
-        // macList = getMac()
-        // target = getLocation();
 
         for (int i = 0; i < locationList.Count; i++)
         {
@@ -153,7 +131,7 @@ public class MapHandler : MonoBehaviour
                 {
                    
                     locationList[i].GetComponent<SpriteRenderer>().color = NotHereColor;
-                    // locationList[i].GetComponent<SpriteRenderer>().color = BlackColor; // 正式要註解掉
+                    
                 }
             }
             
@@ -162,7 +140,7 @@ public class MapHandler : MonoBehaviour
     }
 
 
-    void getWifiMac() // 之後要換寫到不同地方
+    void getWifiMac() 
     {
         
         MacData macData = new MacData();
@@ -172,7 +150,7 @@ public class MapHandler : MonoBehaviour
         Debug.Log(jsonData);
 
         overallManager.postData(jsonData, url);
-        // todo send api;
+        // send api;
 
         
 
@@ -190,7 +168,6 @@ public class MapHandler : MonoBehaviour
             for(float j = downMost; j <= upMost; j += gridLength)
             {
                 Vector3 tmpPos = new Vector3(i, j+1.4f, 0);
-                // 实例化Prefab物体
                 GameObject newObject = Instantiate(locationPrefab, tmpPos, Quaternion.identity);
                 newObject.transform.SetParent(mapArea.transform);
                 standardScale = newObject.transform.localScale * 5 / gridAmount;

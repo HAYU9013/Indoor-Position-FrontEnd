@@ -85,12 +85,9 @@ public class LocationHandler : MonoBehaviour
         int num = int.Parse(gameObject.name.Split("_")[1]);
         mapHandler.haveLocationData[num] = true;
 
-        // overallManager.FloatWindows();
-
-
     }
 
-    void getWifiMac() // 之後要換寫到不同地方
+    void getWifiMac()
     {
         
         int num = int.Parse(gameObject.name.Split("_")[1]);

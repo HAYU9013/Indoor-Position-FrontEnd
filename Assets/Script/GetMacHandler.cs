@@ -81,10 +81,6 @@ public class GetMacHandler : MonoBehaviour
                 retMacString.Add(signal);
             }
         }
-        
-
-
-
         return retMacString;
     }
 }
